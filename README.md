@@ -14,4 +14,4 @@ Hours, minutes and seconds sit on stacked rings that turn so the current time al
 
 ## Files
 - `index.html` — loads p5.js and the sketch
-- `sketch.js` — the clock (the `Ring` class draws each ring; nested loops draw the rings, the dot grid and the city grid)
+- `sketch.js` — the clock (the `Ring` class draws each ring; nested loops draw the rings and their ticks, and measure the clock to center it)
