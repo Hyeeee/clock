@@ -2,7 +2,7 @@
   ORBIT CLOCK — a minimal 3D world clock (v29)
   --------------------------------------------------------------
   Black & white only. Hours, minutes and seconds sit on stacked
-  rings (like a rotating drum). Each ring turns so that the
+  rings (like a rotating orbit). Each ring turns so that the
   current value always faces you at the front marker.
 
   The "3D" is done by hand: every point (x, y, z) is rotated and
@@ -72,12 +72,12 @@ class Ring {
     this.labelFn = o.labelFn;        // turns an index into text, e.g. 0 -> "12"
     this.textSize = o.textSize || 12;
     this.tick = o.tick || 0;         // tick length (0 = no ticks)
-    this.drumY = o.drumY;            // height in ORBIT view
-    this.drumR = o.drumR;            // radius in ORBIT view
+    this.orbitY = o.orbitY;            // height in ORBIT view
+    this.orbitR = o.orbitR;            // radius in ORBIT view
     this.dialR = o.dialR;            // radius in DIAL view (all rings flat, y = 0)
     this.angle = 0;                  // current rotation (animated)
-    this.y = this.drumY;
-    this.r = this.drumR;
+    this.y = this.orbitY;
+    this.r = this.orbitR;
   }
 
   // ease the rotation toward the current time value
@@ -90,8 +90,8 @@ class Ring {
       this.angle += diff * 0.12;
     }
     // morph between the two views
-    this.y = lerp(this.drumY, 0, morph);
-    this.r = lerp(this.drumR, this.dialR, morph);
+    this.y = lerp(this.orbitY, 0, morph);
+    this.r = lerp(this.orbitR, this.dialR, morph);
   }
 
   // a point on this ring at angle a and radius r, projected to the screen
@@ -169,11 +169,11 @@ function setup() {
   // the stack of rings, top to bottom
   rings = [
     new Ring({ count: 12, unit: 'h', labelEvery: 1, labelFn: (i) => (i === 0 ? '12' : String(i)),
-               textSize: 34, drumY: -165, drumR: 215, dialR: 270 }),
-    new Ring({ count: 12, unit: 'h', tick: 14, drumY: -74, drumR: 195, dialR: 215 }),
+               textSize: 34, orbitY: -165, orbitR: 215, dialR: 270 }),
+    new Ring({ count: 12, unit: 'h', tick: 14, orbitY: -74, orbitR: 195, dialR: 215 }),
     new Ring({ count: 60, unit: 'm', tick: 7, labelEvery: 5, labelFn: (i) => nf(i, 2),
-               textSize: 11, drumY: 26, drumR: 210, dialR: 185 }),
-    new Ring({ count: 60, unit: 's', tick: 6, drumY: 155, drumR: 210, dialR: 130 }),
+               textSize: 11, orbitY: 26, orbitR: 210, dialR: 185 }),
+    new Ring({ count: 60, unit: 's', tick: 6, orbitY: 155, orbitR: 210, dialR: 130 }),
   ];
 }
 
@@ -311,7 +311,7 @@ function computeLayout() {
 }
 
 // Center the clock on what is actually DRAWN, not on its math center.
-// A tilted drum looks lower than its center (the front of the bottom ring
+// A tilted orbit looks lower than its center (the front of the bottom ring
 // swings down), so we project the rings once with the default view,
 // measure the box they cover on screen, then scale and move the clock so
 // that box sits in the middle of the free space.
