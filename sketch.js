@@ -1,5 +1,5 @@
 /*
-  DRUM — a minimal 3D world clock (v29)
+  ORBIT CLOCK — a minimal 3D world clock (v29)
   --------------------------------------------------------------
   Black & white only. Hours, minutes and seconds sit on stacked
   rings (like a rotating drum). Each ring turns so that the

@@ -1,4 +1,4 @@
-# Drum World Clock
+# Orbit Clock
 
 A minimal 3D world clock built with p5.js.
 
