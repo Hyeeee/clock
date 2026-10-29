@@ -9,7 +9,7 @@
   projected onto the 2D canvas with a small perspective formula.
 
   Mouse : drag = rotate · scroll = zoom · move = subtle tilt
-          double-click = switch view (DRUM <-> DIAL)
+          double-click = switch view (ORBIT <-> DIAL)
           click a city at the bottom = switch city
   Keys  : 1-9 = city · V = view · L = light / dark mode
   --------------------------------------------------------------
@@ -39,7 +39,7 @@ let cx, cy, unit;         // screen center + scale
 // ---------- STATE ----------
 let rings = [];
 let cityIndex = 0;
-let morph = 0;            // 0 = DRUM view, 1 = DIAL view (animated)
+let morph = 0;            // 0 = ORBIT view, 1 = DIAL view (animated)
 let viewDial = false;
 let lightMode = false;
 let lastDaytime = null;   // was the selected city in daytime last frame? (null = not checked yet)
@@ -72,8 +72,8 @@ class Ring {
     this.labelFn = o.labelFn;        // turns an index into text, e.g. 0 -> "12"
     this.textSize = o.textSize || 12;
     this.tick = o.tick || 0;         // tick length (0 = no ticks)
-    this.drumY = o.drumY;            // height in DRUM view
-    this.drumR = o.drumR;            // radius in DRUM view
+    this.drumY = o.drumY;            // height in ORBIT view
+    this.drumR = o.drumR;            // radius in ORBIT view
     this.dialR = o.dialR;            // radius in DIAL view (all rings flat, y = 0)
     this.angle = 0;                  // current rotation (animated)
     this.y = this.drumY;
@@ -192,7 +192,7 @@ function draw() {
   unit = L.clock.unit;
 
   // --- camera: hover tilt + drag + view mode ---
-  // hover tilt only in DRUM view (in DIAL view it would just spin the dial)
+  // hover tilt only in ORBIT view (in DIAL view it would just spin the dial)
   const hoverYaw = canHover ? (mouseX / width - 0.5) * 0.35 * (1 - morph) : 0;
   // DIAL view looks straight down (90°), so the rings are perfect circles
   const basePitch = lerp(0.62, HALF_PI, morph);
@@ -259,7 +259,7 @@ function computeLayout() {
 
   // --- buttons ---
   // Two toggle icons. 'size' is the tap area, 'icon' is how big the drawing is.
-  // text buttons:  DRUM  DIAL      DARK  LIGHT   (no boxes)
+  // text buttons:  ORBIT  DIAL      DARK  LIGHT   (no boxes)
   // size = text size, h = tap height, optGap = space between the two words,
   // groupGap = space between the two pairs
   const ctrl = { size: 11, h: 30, optGap: 14, groupGap: compact || short ? 22 : 30 };
@@ -489,7 +489,7 @@ function drawControls() {
 // the other one is dim. Click / tap a word to choose it.
 function drawTextButtons() {
   const groups = [
-    { options: ['DRUM', 'DIAL'],  selected: viewDial ? 1 : 0,  set: (k) => setView(k === 1) },
+    { options: ['ORBIT', 'DIAL'],  selected: viewDial ? 1 : 0,  set: (k) => setView(k === 1) },
     { options: ['DARK', 'LIGHT'], selected: lightMode ? 1 : 0, set: (k) => setLight(k === 1) },
   ];
   const c = L.ctrl;
